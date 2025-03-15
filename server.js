@@ -23,15 +23,25 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
 
-  socket.on('requestPrivateCallAccess', (data: {username: string, roomId: string, userId: string}) => {
+  socket.on('requestPrivateCallAccess', (data) => {
     const { username, roomId, userId } = data
     socket.to(roomId).emit("requestMessage", {username, roomId, userId})
   })
   
-  socket.on('acceptedPrivateCallAccess', (data: {roomId: string, userId: string}) => {
+  socket.on('acceptedPrivateCallAccess', (data) => {
     const { roomId, userId } = data
     socket.to(roomId).emit("acceptedPrivateCallAccess", {userId})
   })
+  
+  // socket.on('requestPrivateCallAccess', (data: {username: string, roomId: string, userId: string}) => {
+  //   const { username, roomId, userId } = data
+  //   socket.to(roomId).emit("requestMessage", {username, roomId, userId})
+  // })
+  
+  // socket.on('acceptedPrivateCallAccess', (data: {roomId: string, userId: string}) => {
+  //   const { roomId, userId } = data
+  //   socket.to(roomId).emit("acceptedPrivateCallAccess", {userId})
+  // })
 
   socket.on('joinRoom', (roomId) => {
     socket.join(roomId)
