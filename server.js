@@ -1,6 +1,7 @@
 import { createServer } from 'http'
 import express from 'express'
 import { Server } from 'socket.io'
+import path from "path"
 
 const port = parseInt(process.env.PORT || '8000', 10)
 const dev = process.env.NODE_ENV !== 'production'
@@ -32,7 +33,7 @@ io.on('connection', (socket) => {
     const { roomId, userId } = data
     socket.to(roomId).emit("acceptedPrivateCallAccess", {userId})
   })
-  
+
   // socket.on('requestPrivateCallAccess', (data: {username: string, roomId: string, userId: string}) => {
   //   const { username, roomId, userId } = data
   //   socket.to(roomId).emit("requestMessage", {username, roomId, userId})
@@ -51,9 +52,12 @@ io.on('connection', (socket) => {
     console.log('user disconnected');
   });
 })
-app.get("/", (req, res) => {
+app.use(express.static(path.join(process.cwd(), 'public')));
+
+app.get("/", (_, res) => {
   res.json({message: "Server is running"})
 })
+
 
 // Start the server
 server.listen(port, () => {
