@@ -8,6 +8,12 @@ const dev = process.env.NODE_ENV !== 'production'
 
 const app = express()
 
+// CORS SETUP
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST"]
+}))
+
 // Store active connections and meeting rooms
 const clients = new Map()
 const meetings = new Map()
@@ -17,7 +23,7 @@ const server = createServer(app)
 // Create WebSocket server
 const io = new Server(server, {
   cors: {
-    origin: '*',
+    origin: "*",
     methods: ["GET", "POST"]
   }
 })
