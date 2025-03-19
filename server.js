@@ -2,6 +2,7 @@ import { createServer } from 'http'
 import express from 'express'
 import { Server } from 'socket.io'
 import path from "path"
+import cors from "cors"
 
 const port = parseInt(process.env.PORT || '8000', 10)
 const dev = process.env.NODE_ENV !== 'production'
